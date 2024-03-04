@@ -1,3 +1,10 @@
+<?php 
+require_once('../connexion/connexion.php'); 
+include('../class/class-catcompte.php');
+$affiche = new Catcompte;
+$donnes = $affiche->affichage();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,14 +34,14 @@
             <div class="alert-info alert text-center">Message</div>
             <!-- Le form qui enregistrer les données  -->
             <div class="col-xl-4 col-lg-4 col-md-6">
-                <form action="" class="shadow p-3">
+                <form action="" class="shadow p-3" method="POST">
                     <div class="row">
                         <div class="col-12 p-3">
                             <label for="">Desingation <span class="text-danger">*</span></label>
-                            <input required type="text" class="form-control" placeholder="Entrez la description">
+                            <input required type="text" class="form-control" placeholder="Entrez la description" name="desingation">
                         </div>
                         <div class="col-12 p-3 ">
-                            <input type="submit" class="btn btn-dark w-100" value="Enregistrer">
+                            <input type="submit" class="btn btn-dark w-100" value="Enregistrer" name="enregistrer">
                         </div>
                     </div>
                 </form>
@@ -50,12 +57,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <th>1</th>
-                        <td>Donnee</td>
-                        <td>
-                            <a href="" class="btn btn-dark btn-sm "><i class="bi bi-pencil-square"></i></a>
-                            <a href="" class="btn btn-danger btn-sm "><i class="bi bi-trash3-fill"></i></a>
-                        </td>
+                        <?php
+                                $n=0;
+                                while($idcompte=$donnes->fetch()){
+                                    $n++;
+                            ?>
+                                <th scope="row"><?= $n;?></th>
+                                <td> <?= $idcompte["desingation"] ?></td>
+                                <td>
+                                    <a href="catcompte.php?idcompte=<?=$idcompte['id'] ?>" class="btn btn-dark btn-sm "><i class="bi bi-pencil-square"></i></a>
+                                    <a href="" class="btn btn-danger btn-sm "><i class="bi bi-trash3-fill"></i></a>
+                                </td>
+                            <?php
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>
